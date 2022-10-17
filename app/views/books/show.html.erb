@@ -36,8 +36,25 @@
             <td><%= link_to 'Edit', edit_book_path(@book), class: "btn btn-sm btn-success" %></td>
             <td><%= link_to 'Destroy', @book, method: :delete, data: { confirm: '本当に消しますか？' }, class: "btn btn-sm btn-danger"%></td>
           <% end %>
+          <td>コメント数:<%= @book.book_comments.count %></td>
         </tr>
       </table>
+      <table>
+        <tr>
+        <% @book.book_comments.each do |book_comment| %>
+          <td><%= book_comment.user.name %></td>
+          <td><%= book_comment.comment %></td>
+        <% end %>
+        </tr>
+      </table>
+      <%= form_with model: [@book, @book_comment] do |f| %>
+        <div class="form-group">
+          <%= f.text_area :comment, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.submit "送信" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
