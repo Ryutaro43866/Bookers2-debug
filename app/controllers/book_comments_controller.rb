@@ -12,7 +12,6 @@ class BookCommentsController < ApplicationController
     @book = Book.find(params[:book_id])
     @book_comment = BookComment.find_by(id: params[:id], book_id: params[:book_id]).destroy
     @book_comment.destroy
-    @book_comment = BookComment.new
   end
 
   private
