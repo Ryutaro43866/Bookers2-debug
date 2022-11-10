@@ -35,29 +35,17 @@
 
   <% else %>
     <% if current_user.following?(user) %>
-
       <%= link_to user_relationships_path(user.id), method: :delete, class: "btn btn-info" do %>
         フォローを外す
       <% end %>
-
-        <% if @isRoom == true %>
-          <%= link_to 'chatを始める', room_path(@roomId), class: "d-flex align-items-center ml-3" %>
-        <% else %>
-          <%= form_with model: @room do |f| %>
-            <%= fields_for @entry do |e| %>
-              <%= e.hidden_field :user_id, :value=> @user.id %>
-            <% end %>
-            <%= f.submit "チャットを始める", class: "ml-1" %>
-          <% end %>
-
-        <% end %>
-
     <% else %>
-
       <%= link_to user_relationships_path(user.id), method: :post, class: "btn btn-success" do %>
         フォローする
       <% end %>
     <% end %>
+  <% end %>
 
+  <% if current_user != user && current_user.following?(user) && user.following?(current_user) %>
+    <%= link_to 'chatを始める', message_path(user.id), class: "ml-3" %>
   <% end %>
 </div>
