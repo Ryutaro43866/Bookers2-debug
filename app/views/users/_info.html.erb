@@ -28,31 +28,36 @@
 
 <div class='row'>
   <% if user == current_user %>
+
     <%= link_to edit_user_path(user), class: "btn btn-outline-secondary btn-block" do %>
       <i class="fas fa-user-cog"></i>
     <% end %>
+
   <% else %>
     <% if current_user.following?(user) %>
+
       <%= link_to user_relationships_path(user.id), method: :delete, class: "btn btn-info" do %>
         フォローを外す
-        <%= link_to 'chatを始める', room_path, class: "d-flex align-items-center ml-3" %>
       <% end %>
 
-      <% if @isRoom == true %>
-        <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
-      <% else %>
-        <%= form_with model: @room do |f| %>
-          <%= fields_for @entry do |e| %>
-            <%= e.hidden_field :user_id, :value=> @user.id %>
+        <% if @isRoom == true %>
+          <%= link_to 'chatを始める', room_path(@roomId), class: "d-flex align-items-center ml-3" %>
+        <% else %>
+          <%= form_with model: @room do |f| %>
+            <%= fields_for @entry do |e| %>
+              <%= e.hidden_field :user_id, :value=> @user.id %>
+            <% end %>
+            <%= f.submit "チャットを始める", class: "ml-1" %>
           <% end %>
-          <%= f.submit "チャットを始める" %>
+
         <% end %>
-      <% end %>
 
     <% else %>
+
       <%= link_to user_relationships_path(user.id), method: :post, class: "btn btn-success" do %>
         フォローする
       <% end %>
     <% end %>
+
   <% end %>
 </div>
